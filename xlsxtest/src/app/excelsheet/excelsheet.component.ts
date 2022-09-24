@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./excelsheet.component.css'],
 })
 export class ExcelsheetComponent implements OnInit {
+  data: any;
   constructor() {}
 
   ngOnInit(): void {}
@@ -25,6 +26,8 @@ export class ExcelsheetComponent implements OnInit {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       console.log(ws);
+      this.data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      console.log(this.data);
     };
 
     reader.readAsBinaryString(target.files[0]);
