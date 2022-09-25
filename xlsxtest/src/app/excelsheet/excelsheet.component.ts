@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Data } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { ExcelService } from './../excel.service';
 
 @Component({
   selector: 'app-excelsheet',
@@ -9,7 +10,23 @@ import * as XLSX from 'xlsx';
 })
 export class ExcelsheetComponent implements OnInit {
   data: any;
-  constructor() {}
+  readdata: any;
+  constructor(private excelService: ExcelService) {
+    this.data = [
+      [2019, 1, '50', '20', '25', '20'],
+      [2019, 2, '80', '20', '25', '20'],
+      [2019, 3, '120', '20', '25', '20'],
+      [2019, 4, '75', '20', '25', '20'],
+      [2019, 5, '60', '20', '25', '20'],
+      [2019, 6, '80', '20', '25', '20'],
+      [2019, 7, '95', '20', '25', '20'],
+      [2019, 8, '55', '20', '25', '20'],
+      [2019, 9, '45', '20', '25', '20'],
+      [2019, 10, '80', '20', '25', '20'],
+      [2019, 11, '90', '20', '25', '20'],
+      [2019, 12, '110', '20', '25', '20'],
+    ];
+  }
 
   ngOnInit(): void {}
 
@@ -26,10 +43,15 @@ export class ExcelsheetComponent implements OnInit {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       console.log(ws);
-      this.data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      console.log(this.data);
+      this.readdata = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      console.log(this.readdata);
     };
 
     reader.readAsBinaryString(target.files[0]);
+  }
+
+  generateExcel() {
+    // console.log('called');
+    this.excelService.generateExcel();
   }
 }
